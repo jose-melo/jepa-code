@@ -1,0 +1,2 @@
+enum {PUSH,ADD,SUB,MUL,JZ,JMP,HALT,DUP};
+int run(const int *code,int *stack){int pc=0,sp=0;for(;;){int op=code[pc++];switch(op){case PUSH:stack[sp++]=code[pc++];break;case ADD:sp--;stack[sp-1]+=stack[sp];break;case SUB:sp--;stack[sp-1]-=stack[sp];break;case MUL:sp--;stack[sp-1]*=stack[sp];break;case DUP:stack[sp]=stack[sp-1];sp++;break;case JZ:{int t=code[pc++];if(stack[--sp]==0)pc=t;break;}case JMP:pc=code[pc];break;case HALT:return sp?stack[sp-1]:0;default:return -1;}}}
